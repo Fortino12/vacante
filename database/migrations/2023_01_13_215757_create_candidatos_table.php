@@ -13,19 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('candidatos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('numeroNomina');
             $table->string('nombre');
             $table->string('paterno');
             $table->string('materno');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->bigInteger('telefono');
             $table->date('fechaNacimiento');
+            $table->string('nombreEstudio');
+            $table->string('email')->unique();
+            $table->bigInteger('telefono');
+            $table->string('curp');
+            $table->string('rfc');
             $table->text('foto');
-            $table->rememberToken();
+            $table->string('estatus');
+            $table->unsignedInteger('direccion_id');
             $table->timestamps();
         });
     }
@@ -37,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('candidatos');
     }
 };
