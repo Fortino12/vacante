@@ -16,9 +16,6 @@ return new class extends Migration
         Schema::create('subdireccions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombreSubdireccion');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('oficina_id');
-            $table->unsignedInteger('drv_id');
             $table->timestamps();
         });
     }

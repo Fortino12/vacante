@@ -18,8 +18,6 @@ return new class extends Migration
             $table->string('oficina');
             $table->string('tipo');
             $table->string('email')->unique();
-            $table->unsignedInteger('localidad_id');
-            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

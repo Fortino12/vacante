@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('moras', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('indice');
-            $table->unsignedInteger('oficina_id');
             $table->timestamps();
         });
     }

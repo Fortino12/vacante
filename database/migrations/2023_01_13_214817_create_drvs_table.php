@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('drvs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('drv');
-            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

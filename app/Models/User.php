@@ -18,10 +18,53 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'numeroNomina',
+        'nombre',
+        'paterno',
+        'materno',
         'email',
         'password',
+        'telefono',
+        'fechaNacimiento',
+        'foto',
+        'puesto_id',
     ];
+
+    //Relaciónes mediante modelos Belongs To
+
+    public function puesto(){
+        return $this->belongsTo(Puesto::class,'puesto_id');
+    }
+
+    //Relación de modelos inverso con hasMany
+
+    public function cajaChica(){
+        return $this->hasMany(CajaChica::class);
+    }
+
+    public function drv(){
+        return $this->hasMany(Drv::class);
+    }
+
+    public function historialLAboral(){
+        return $this->hasMany(HistorialLaboral::class);
+    }
+
+    public function horario(){
+        return $this->hasMany(Horario::Class);
+    }
+    
+    public function oficina(){
+        return $this->hasMany(Oficina::class);
+    }
+    
+    public function subdireccion(){
+        return $this->hasMany(Subdireccion::class);
+    }
+
+    public function puestos(){
+        return $this->belongsToMany(Puesto::class)->withTimesTamps();
+    }
 
     /**
      * The attributes that should be hidden for serialization.

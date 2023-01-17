@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('localidads', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombreLocalidad');
-            $table->unsignedInteger('municipio_id');
             $table->timestamps();
         });
     }

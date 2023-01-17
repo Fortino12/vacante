@@ -16,8 +16,6 @@ return new class extends Migration
         Schema::create('puesto_user', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('descripcion');
-            $table->integer('puesto_id')->nullable();
-            $table->integer('user_id')->nullable();
             $table->date('fechaUpdate');
             $table->timestamps();
         });

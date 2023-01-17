@@ -17,7 +17,6 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->integer('presupuesto');
             $table->string('periodo');
-            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

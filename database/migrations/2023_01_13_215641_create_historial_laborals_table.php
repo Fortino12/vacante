@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('fechaSalida');
             $table->string('tipoContrato');
             $table->text('motivo');
-            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

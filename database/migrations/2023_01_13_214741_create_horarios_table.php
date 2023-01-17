@@ -18,8 +18,6 @@ return new class extends Migration
             $table->date('fecha');
             $table->time('horaEntrada');
             $table->time('horaSalida');
-            $table->unsignedInteger('oficina_id');
-            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

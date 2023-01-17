@@ -17,8 +17,6 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('nombreVacante');
             $table->integer('numVacante');
-            $table->unsignedInteger('puesto_id');
-            $table->unsignedInteger('municipio_id');
             $table->timestamps();
         });
     }

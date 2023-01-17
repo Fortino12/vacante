@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('codigoPostal');
             $table->string('colonia');
             $table->text('referencia');
-            $table->unsignedInteger('localidad_id');
             $table->timestamps();
         });
     }

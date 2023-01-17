@@ -18,8 +18,6 @@ return new class extends Migration
             $table->integer('monto');
             $table->string('comprobante');
             $table->date('fechaFacturacion');
-            $table->unsignedInteger('caja_id');
-            $table->unsignedInteger('gasto_id');
             $table->timestamps();
         });
     }

@@ -19,14 +19,13 @@ return new class extends Migration
             $table->string('paterno');
             $table->string('materno');
             $table->date('fechaNacimiento');
-            $table->string('nombreEstudio');
+            $table->string('nivelEstudio');
             $table->string('email')->unique();
             $table->bigInteger('telefono');
             $table->string('curp');
             $table->string('rfc');
             $table->text('foto');
             $table->string('estatus');
-            $table->unsignedInteger('direccion_id');
             $table->timestamps();
         });
     }

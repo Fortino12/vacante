@@ -17,7 +17,6 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->date('fechaApertura');
             $table->date('fechaCierre');
-            $table->unsignedInteger('oficina_id');
             $table->timestamps();
         });
     }
