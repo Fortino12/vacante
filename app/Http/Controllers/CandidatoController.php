@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Candidato;
+use App\Models\Direccion;
 
 class CandidatoController extends Controller
 {
@@ -13,7 +15,8 @@ class CandidatoController extends Controller
      */
     public function index()
     {
-        //
+        $candidatos=Candidato::all();
+        return view('Formularios.Candidato.index',compact('candidatos'));
     }
 
     /**
@@ -23,7 +26,8 @@ class CandidatoController extends Controller
      */
     public function create()
     {
-        //
+        $direccion=Direccion::all();
+        return view('Formularios.Candidato.create',compact('direccion'));
     }
 
     /**
@@ -34,7 +38,22 @@ class CandidatoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $candidato=new Candidato;
+        $candidato->nombre=$request->nombre;
+        $candidato->paterno=$requeste->paterno;
+        $candidato->materno=$request->materno;
+        $candidato->fechaNacimiento=$request->fechaNacimiento;
+        $candidato->nivelEstudio=$request->nivelEstudio;
+        $candidato->email=$request->email;
+        $candidato->telefono=$request->telefono;
+        $candidato->curp=$request->curp;
+        $candidato->rfc=$request->rfc;
+        $candidato->foto=$request->foto;
+        $candidato->estatus=$request->estatus;
+        $candidato->direccion=$request->direccion;
+        $candidato->save();
+
+        return redirect()->action([CandidatoController::class,'index'])->with('status_success','candidato Registrado');
     }
 
     /**
@@ -56,7 +75,8 @@ class CandidatoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $candidato=Candidato::find($id);
+        return view('Formularios.Candidatos.update',compact('candidato'));
     }
 
     /**
@@ -68,7 +88,23 @@ class CandidatoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $candidato=Candidato::find($id);
+        $candidato->nombre=$request->nombre;
+        $candidato->paterno=$requeste->paterno;
+        $candidato->materno=$request->materno;
+        $candidato->fechaNacimiento=$request->fechaNacimiento;
+        $candidato->nivelEstudio=$request->nivelEstudio;
+        $candidato->email=$request->email;
+        $candidato->telefono=$request->telefono;
+        $candidato->curp=$request->curp;
+        $candidato->rfc=$request->rfc;
+        $candidato->foto=$request->foto;
+        $candidato->estatus=$request->estatus;
+        $candidato->direccion=$request->direccion;
+        $candidato->save();
+
+        return redirect()->action([CandidatoController::class,'index'])->with('status_success','candidato Editado');
+    
     }
 
     /**
@@ -79,6 +115,9 @@ class CandidatoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $candidato=Candidato::find($id);
+        $candidato->delete();
+
+        return redirect()->action([CandidatoController::class,'index'])->with('status_success','candidato eliminado');
     }
 }

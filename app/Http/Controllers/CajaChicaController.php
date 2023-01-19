@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CajaChica;
+use App\Models\User;
 
 class CajaChicaController extends Controller
 {
@@ -13,7 +15,8 @@ class CajaChicaController extends Controller
      */
     public function index()
     {
-        //
+        $cajas=CajaChica::all();
+        return view('Formularios.CajaChinca.index',compact('cajas'));
     }
 
     /**
@@ -23,7 +26,8 @@ class CajaChicaController extends Controller
      */
     public function create()
     {
-        //
+        $user=User::all();
+        return view('Formularios.CajaChica,create',compact('user'));
     }
 
     /**
@@ -34,7 +38,13 @@ class CajaChicaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $caja=new CajaChica;
+        $caja->presupuesto=$request->presupuesto;
+        $caja->periodo=$requeste->periodo;
+        $caja->user_id=$request->user_id;
+        $caja->save();
+
+        return redirect()->action([CajaChicaController::class,'index'])->with('status_success','Caja Creado');
     }
 
     /**
@@ -56,7 +66,9 @@ class CajaChicaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $caja=CajaChica::find($id);
+        return view('Formularios.CajaChica.update',compact('caja'));
+    
     }
 
     /**
@@ -68,7 +80,14 @@ class CajaChicaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $caja=CajaChica::find($id);
+        $caja->presupuesto=$request->presupuesto;
+        $caja->periodo=$requeste->periodo;
+        $caja->user_id=$request->user_id;
+        $caja->save();
+
+        return redirect()->action([CajaChicaController::class,'index'])->with('status_success','Caja Creado');
+    
     }
 
     /**
@@ -79,6 +98,9 @@ class CajaChicaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $caja=CajaChica::finc($id);
+        $caja->delete();
+
+        return redirect()->action([CajaChicaController::class,'index'])->with('status_success','Caja Eliminada.');
     }
 }

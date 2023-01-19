@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Esatdo;
 
 class EstadoController extends Controller
 {
@@ -13,7 +14,8 @@ class EstadoController extends Controller
      */
     public function index()
     {
-        //
+        $estado=Estado::all();
+        return view('Formularios.Estado.index',compact('estado'));
     }
 
     /**
@@ -23,7 +25,7 @@ class EstadoController extends Controller
      */
     public function create()
     {
-        //
+        return view('Formularios.Estados.create');
     }
 
     /**
@@ -34,7 +36,11 @@ class EstadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $estado=new Estado;
+        $estado->nombreEstado=$request->nombreEstado;
+        $estado->save();
+
+        return redirect()->action([EstadoController::class,'index'])->with('status->success','Estado Agregado');
     }
 
     /**
@@ -56,7 +62,8 @@ class EstadoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $estado=Estado::find($id);
+        return view('Formuarios.Estado.update',compact('estado'));
     }
 
     /**
@@ -68,7 +75,12 @@ class EstadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $estado=Estado::find($id);
+        $estado->nombreEstado=$request->nombreEstado;
+        $estado->save();
+
+        return redirect()->action([EstadoController::class,'index'])->with('status_success','Estado Agregado');
+    
     }
 
     /**
@@ -79,6 +91,8 @@ class EstadoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $estado=Estado::find($id);
+        $estado->delete();
+        return redirect()->action([EstadoController::class,'index'])->with('status_success','Estado eliminado');
     }
 }

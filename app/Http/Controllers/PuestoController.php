@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Puesto;
 
 class PuestoController extends Controller
 {
@@ -13,7 +14,8 @@ class PuestoController extends Controller
      */
     public function index()
     {
-        //
+        $puesto=Puesto::all();
+        return view('Formularios.Puesto.index',compact('puesto'));
     }
 
     /**
@@ -23,7 +25,7 @@ class PuestoController extends Controller
      */
     public function create()
     {
-        //
+        return view('Formularios.Puesto.create');
     }
 
     /**
@@ -34,7 +36,12 @@ class PuestoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $puesto=new Puesto;
+        $puesto->nombrePuesto=$request->nombrePuesto;
+        $puesto->descripcion=$request->descripcion;
+        $puesto->save();
+
+        return redirect()->action([PuestoController::class,'index'])->with('status_success','Puesto Agregado');
     }
 
     /**
@@ -56,7 +63,8 @@ class PuestoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $puesto=Puesto::find($id);
+        return view('Formularios.Puesto.update',compact('puesto'));
     }
 
     /**
@@ -68,7 +76,13 @@ class PuestoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $puesto=Puesto::find($id);
+        $puesto->nombrePuesto=$request->nombrePuesto;
+        $puesto->descripcion=$request->descripcion;
+        $puesto->save();
+
+        return redirect()->action([PuestoController::class,'index'])->with('status_success','Puesto Agregado');
+    
     }
 
     /**
@@ -79,6 +93,8 @@ class PuestoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $puesto=Puesto::find($id);
+        $puesto->delete();
+        return redirect()->action([PuestoController::class,'index'])->with('status_success','Puesto Eliminado');
     }
 }

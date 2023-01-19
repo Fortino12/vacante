@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Requesicion;
+use App\Models\Oficina;
 
 class RequesicionController extends Controller
 {
@@ -13,7 +15,8 @@ class RequesicionController extends Controller
      */
     public function index()
     {
-        //
+        $requesicion=Requesicion::all();
+        return view('Formularios.Requesicion.index',compact('requesicion'));
     }
 
     /**
@@ -23,7 +26,8 @@ class RequesicionController extends Controller
      */
     public function create()
     {
-        //
+        $oficina=Oficina::all();
+        return view('Formularios.Requesicion.create',compact('oficina'));
     }
 
     /**
@@ -34,7 +38,12 @@ class RequesicionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $requesicion=new Requesicion;
+        $requesicion->fechaApertura=$requesicion->fechaApertura;
+        $requesicion->fechaCierre=$requesicion->fechaCierre;
+        $requesicion->oficina_id=$requesicion->oficina_id;
+        $requesicion->save();
+        return redirect()->action([RequesicionController::class,'index'])->with('status_success','Requesicion Agregada');
     }
 
     /**
@@ -56,7 +65,9 @@ class RequesicionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $requesicion=Requesicion::find($id);
+        $oficina=Oficina::all();
+        return view('Formularios.Requesicion.update',compact('requesicion','oficina'));
     }
 
     /**
@@ -68,7 +79,13 @@ class RequesicionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $requesicion=Requesicion::find($id);
+        $requesicion->fechaApertura=$requesicion->fechaApertura;
+        $requesicion->fechaCierre=$requesicion->fechaCierre;
+        $requesicion->oficina_id=$requesicion->oficina_id;
+        $requesicion->save();
+        return redirect()->action([RequesicionController::class,'index'])->with('status_success','Requesicion Editada');
+    
     }
 
     /**
@@ -79,6 +96,9 @@ class RequesicionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $requesicion=Requesicion::find($id);
+        $requesicion->delete();
+        return redirect()->action([RequesicionController::class,'index'])->with('status_success','Requesicion Eliminada');
+    
     }
 }

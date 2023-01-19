@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Mora;
+use App\Models\Oficina;
 
 class MoraController extends Controller
 {
@@ -13,7 +15,8 @@ class MoraController extends Controller
      */
     public function index()
     {
-        //
+        $mora=Mora::all();
+        return view('Formularios.Mora.index',compact('mora'));
     }
 
     /**
@@ -23,7 +26,8 @@ class MoraController extends Controller
      */
     public function create()
     {
-        //
+        $oficina=Oficina::all();
+        return view('Formularios.Mora.create',compact('oficina'));
     }
 
     /**
@@ -34,7 +38,12 @@ class MoraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mora=new Mora;
+        $mora->indice=$request->indice;
+        $mora->oficina_id=$request->oficina_id;
+        $mora->save();
+
+        return redirect()->action([MoraController::class,'index'])->with('status_success','Mora Agregado');
     }
 
     /**
@@ -56,7 +65,9 @@ class MoraController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mora=Mora::find($id);
+        $oficina=Oficina::all();
+        return view('Formularios.Mora.update',compact('mora','oficina'));
     }
 
     /**
@@ -68,7 +79,13 @@ class MoraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $mora=Mora::find($id);
+        $mora->indice=$request->indice;
+        $mora->oficina_id=$request->oficina_id;
+        $mora->save();
+
+        return redirect()->action([MoraController::class,'index'])->with('status_success','Mora Editado');
+    
     }
 
     /**
@@ -79,6 +96,8 @@ class MoraController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $mora=Mora::find($id);
+        $mora->delete();
+        return redirect()->action([MoraController::class,'index'])->with('status_success','Mora Eliminado');
     }
 }

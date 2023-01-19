@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Subdireccion;
+use App\Models\Drv;
+use App\Models\Oficina;
+use App\Models\User;
 
 class SubdireccionController extends Controller
 {
@@ -13,7 +17,8 @@ class SubdireccionController extends Controller
      */
     public function index()
     {
-        //
+        $subdireccion=Subdireccion::all();
+        return view('Formularios.Subdireccion.index',compact('subdireccion'));
     }
 
     /**
@@ -23,7 +28,10 @@ class SubdireccionController extends Controller
      */
     public function create()
     {
-        //
+        $drv=Drv::all();
+        $oficina=Oficina::all();
+        $user=User::all();
+        return view('Formularios.Subdireccion.create',compact('drv','oficina','user'));
     }
 
     /**
@@ -34,7 +42,13 @@ class SubdireccionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $subdireccion=new Subdireccion;
+        $subdireccion->nombreSubdireccion=$request->nombreSubdireccion;
+        $subdireccion->oficina_id=$request->oficina_id;
+        $subdireccion->user_id=$request->user_id;
+        $subdireccion->drv_id=$request->drv_id;
+        $subdireccion->save();
+        return redirect()->action([SubdireccionController::class,'index'])-with('status_success','subdireccion Creada');
     }
 
     /**
@@ -56,7 +70,11 @@ class SubdireccionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $drv=Drv::all();
+        $oficina=Oficina::all();
+        $user=User::all();
+        $subdireccion=Subdireccion::find($id);
+        return view('Formularios.Subdireccion.update',compact('drv','oficina','user','subdireccion'));
     }
 
     /**
@@ -68,7 +86,13 @@ class SubdireccionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $subdireccion=Subdireccion::find($id);
+        $subdireccion->nombreSubdireccion=$request->nombreSubdireccion;
+        $subdireccion->oficina_id=$request->oficina_id;
+        $subdireccion->user_id=$request->user_id;
+        $subdireccion->drv_id=$request->drv_id;
+        $subdireccion->save();
+        return redirect()->action([SubdireccionController::class,'index'])-with('status_success','subdireccion Editada');
     }
 
     /**
@@ -79,6 +103,8 @@ class SubdireccionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $subdireccion=Subdireccion::find($id);
+        $subdireccion->delete();
+        return redirect()->action([SubdireccionController::class,'index'])-with('status_success','subdireccion Eliminada');
     }
 }

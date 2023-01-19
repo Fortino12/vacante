@@ -10,7 +10,7 @@ class Requesicion extends Model
     use HasFactory;
 
     protected $fillable=[
-        'fechaApertuta',
+        'fechaApertura',
         'fechaCierre',
         'oficina_id',
     ];

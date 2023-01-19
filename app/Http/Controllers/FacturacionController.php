@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Gasto;
+use App\Models\CajaChica;
+use App\Models\Facturacion;
 
 class FacturacionController extends Controller
 {
@@ -13,7 +16,8 @@ class FacturacionController extends Controller
      */
     public function index()
     {
-        //
+        $facturacion=Facturacion::all();
+        return view('Formularios.Facturacion.index',compact('facturacion'));
     }
 
     /**
@@ -23,7 +27,10 @@ class FacturacionController extends Controller
      */
     public function create()
     {
-        //
+        $gatos=Gasto::all();
+        $caja=CajaChica::al();
+
+        return view('Formularios.Facturacion.create',compact('gastos','caja'));
     }
 
     /**
@@ -34,7 +41,15 @@ class FacturacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $facturacion=new Facturacion;
+        $facturacion->monto=$request->facturacion;
+        $facturacion->comprobante=$request->comprobante;
+        $facturacion->fechaFacturacion=$request->fechaFacturacion;
+        $facturacion->caja_id=$request->caja_id;
+        $facturacion->gasto_id=$request->gasto_id;
+        $facturacion->save();
+
+        return redirect()->action([FacturacionController::class,'index'])->with('status_success','Facturacion Agregado');
     }
 
     /**
@@ -56,7 +71,11 @@ class FacturacionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $facturacion=Facturacion::find($id);
+        $gasto=Gasto::all();
+        $caja=CajaChica::all();
+
+        return view('Formularios.Facturacion.update',compact('facturacion','gasto','caja'));
     }
 
     /**
@@ -68,7 +87,14 @@ class FacturacionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $facturacion=Facturacion::find($id );
+        $facturacion->monto=$request->facturacion;
+        $facturacion->comprobante=$request->comprobante;
+        $facturacion->fechaFacturacion=$request->fechaFacturacion;
+        $facturacion->caja_id=$request->caja_id;
+        $facturacion->gasto_id=$request->gasto_id;
+        $facturacion->save();
+        return redirect()->action([FacturacionController::class,'index'])->with('status_succes','facturacion Editado');
     }
 
     /**
@@ -79,6 +105,8 @@ class FacturacionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $facturacion=Facturacion::find($id);
+        $facturacion->delete();
+        return redirect()->action([FacturacionController::class,'index'])->with('status_succes','facturacion Eliminada');
     }
 }

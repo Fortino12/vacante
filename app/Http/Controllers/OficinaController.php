@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Oficina;
+use App\Models\User;
+use App\Models\Localidad;
 
 class OficinaController extends Controller
 {
@@ -13,7 +16,8 @@ class OficinaController extends Controller
      */
     public function index()
     {
-        //
+        $oficina=Oficina::all();
+        return view('Formularios.Oficina.index',compact('oficina'));
     }
 
     /**
@@ -23,7 +27,9 @@ class OficinaController extends Controller
      */
     public function create()
     {
-        //
+        $localidad=Localidad::all();
+        $user=User::all();
+        return view('Formularios.Oficina.create',compat('user','localidad'));
     }
 
     /**
@@ -34,7 +40,15 @@ class OficinaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $oficina=new Oficina;
+        $oficina->oficina=$request->oficina;
+        $oficina->tipo=$request->tipo;
+        $oficina->email=$request->email;
+        $oficina->localidad_id=$request->localidad_id;
+        $oficina->user_id=$request->user_id;
+        $oficina->save();
+
+        return redirect()->action([OficinaController::class,'index'])->with('status_success','Oficina Agregada');
     }
 
     /**
@@ -56,7 +70,10 @@ class OficinaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $oficina=Oficina::find($id);
+        $localidad=Localidad::all();
+        $user=User::all();
+        return view('Formularios.Oficina.update',compact('oficina','localidad','user'))->with('status_success','Oficina Editada');
     }
 
     /**
@@ -68,7 +85,16 @@ class OficinaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $oficina=Oficina::find($id);
+        $oficina->oficina=$request->oficina;
+        $oficina->tipo=$request->tipo;
+        $oficina->email=$request->email;
+        $oficina->localidad_id=$request->localidad_id;
+        $oficina->user_id=$request->user_id;
+        $oficina->save();
+
+        return redirect()->action([OficinaController::class,'index'])->with('status_success','Oficina Agregada');
+    
     }
 
     /**
@@ -79,6 +105,8 @@ class OficinaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $oficina=Oficina::find($id);
+        $oficina->delete();
+        return redirect()->action([OficinaController::class,'index'])->with('status_success','Oficina Eliminada');
     }
 }

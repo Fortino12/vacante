@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Gasto;
 
 class GastoController extends Controller
 {
@@ -13,7 +14,8 @@ class GastoController extends Controller
      */
     public function index()
     {
-        //
+        $gasto=Gasto::all();
+        return view('Formularios.Gasto.index',compact('gasto'));
     }
 
     /**
@@ -23,7 +25,7 @@ class GastoController extends Controller
      */
     public function create()
     {
-        //
+        return view('Formularios.Gasto.create');
     }
 
     /**
@@ -34,7 +36,11 @@ class GastoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $gasto=new Gasto;
+        $gasto->tipoGasto=$request->tipoGasto;
+        $gasto->save();
+
+        return redirect()->action([GastoController::class,'index'])->with('status_success','gasto Agregado');
     }
 
     /**
@@ -56,7 +62,9 @@ class GastoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $gasto=Gasto::find($id);
+
+        return view('Formularios.Gasto.update',compact('gasto'));
     }
 
     /**
@@ -68,7 +76,12 @@ class GastoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $gasto=new Gasto;
+        $gasto->tipoGasto=$request->tipoGasto;
+        $gasto->save();
+
+        return redirect()->action([GastoController::class,'index'])->with('status_success','gasto Agregado');
+    
     }
 
     /**
@@ -79,6 +92,8 @@ class GastoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $gasto=Gasto::find($id);
+        $gasto->delete();
+        return redirect()->action([GastoController::class,'index'])->with('status_success','gasto Eliminado');
     }
 }

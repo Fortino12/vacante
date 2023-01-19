@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Drv;
+use App\Models\User;
 
 class DrvController extends Controller
 {
@@ -13,7 +15,8 @@ class DrvController extends Controller
      */
     public function index()
     {
-        //
+        $drv=Drv::all();
+        return view('Formularios.Drv.index',compact('drv'));
     }
 
     /**
@@ -23,7 +26,8 @@ class DrvController extends Controller
      */
     public function create()
     {
-        //
+        $user=User::all();
+        return view('Formularios.Drv.create',comapct('user'));
     }
 
     /**
@@ -34,7 +38,12 @@ class DrvController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $drv=new Drv;
+        $drv->drv=$request->drv;
+        $drv->user_id=$request->user_id;
+        $drv->save();
+
+        return redirect()->action([DrvController::class,'index'])->with('status_success','Drv Agregado');
     }
 
     /**
@@ -56,7 +65,9 @@ class DrvController extends Controller
      */
     public function edit($id)
     {
-        //
+        $drv=Drv::find($id);
+        $user=User::all();
+        return view('Formularios.Drv.update',compact('drv','user'));
     }
 
     /**
@@ -68,7 +79,13 @@ class DrvController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $drv=Drv::find($id);
+        $drv->drv=$request->drv;
+        $drv->user_id=$request->user_id;
+        $drv->save();
+
+        return redirect()->action([DrvController::class,'index'])->with('status_success','Drv Agregado');
+    
     }
 
     /**
@@ -79,6 +96,9 @@ class DrvController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $drv=Drv::find($id);
+        $drv->delete();
+
+        return redirect()->action([DrvController::class,'index'])->with('status_success','Drv Eliminado');
     }
 }

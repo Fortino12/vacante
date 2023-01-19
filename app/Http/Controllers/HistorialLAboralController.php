@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\HistorialLaboral;
+use App\Models\User;
 
 class HistorialLAboralController extends Controller
 {
@@ -13,7 +15,8 @@ class HistorialLAboralController extends Controller
      */
     public function index()
     {
-        //
+        $historial=HistorialLaboral::find($id);
+        return view('Formularios.HistorailLaboral.index',compact('historial'));
     }
 
     /**
@@ -23,7 +26,8 @@ class HistorialLAboralController extends Controller
      */
     public function create()
     {
-        //
+        $user=User::all();
+        return view('Formularios.HistorialLaboral.create',compact('user'));
     }
 
     /**
@@ -34,7 +38,15 @@ class HistorialLAboralController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $historial=new HistorialLaboral;
+        $historial->fechaIngreso=$request->fechaIngreso;
+        $historial->fechaSalida=$request->fechaSalida;
+        $historial->tipoContrato=$request->tipoContrato;
+        $historial->motivo=$request->motivo;
+        $historial->user_id=$request->user_id;
+        $historial->save();
+
+        return redirect()->action([HistorialLaboralController::class,'index'])-with('status_success','Historial Agregado');
     }
 
     /**
@@ -56,7 +68,8 @@ class HistorialLAboralController extends Controller
      */
     public function edit($id)
     {
-        //
+        $historial=HistorialLaboral::fins($id);
+        return view('Formularios.HistorialLaboral.update',compact('historial'));
     }
 
     /**
@@ -68,7 +81,16 @@ class HistorialLAboralController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $historial=HistorialLaboral::find($id);
+        $historial->fechaIngreso=$request->fechaIngreso;
+        $historial->fechaSalida=$request->fechaSalida;
+        $historial->tipoContrato=$request->tipoContrato;
+        $historial->motivo=$request->motivo;
+        $historial->user_id=$request->user_id;
+        $historial->save();
+
+        return redirect()->action([HistorialLaboralController::class,'index'])-with('status_success','Historial Agregado');
+    
     }
 
     /**
@@ -79,6 +101,9 @@ class HistorialLAboralController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $historial=HistorialLaboral::find($id);
+        $historial->delete();
+        return redirect()->action([HistorialLaboralController::class,'index'])-with('status_success','Historial Eliminado');
+    
     }
 }

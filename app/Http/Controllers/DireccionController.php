@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Direccion;
+use App\Models\Localidad;
 
 class DireccionController extends Controller
 {
@@ -13,7 +15,8 @@ class DireccionController extends Controller
      */
     public function index()
     {
-        //
+        $direccion=Direccion::all();
+        return view('Formularios.Direccion.index',compact('direccion'));
     }
 
     /**
@@ -23,7 +26,8 @@ class DireccionController extends Controller
      */
     public function create()
     {
-        //
+        $localidad=Localidad::all();
+        return view('Formularios.Direccion.create',compact('localidad'));
     }
 
     /**
@@ -34,7 +38,15 @@ class DireccionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $direccion=new Direccion;
+        $direccion->calle=$request->calle;
+        $direccion->codigoPostal=$request->codigoPostal;
+        $direccion->colonia=$request->colonia;
+        $direccion->referencia=$request->referencia;
+        $direccion->localidad_id=$request->localidad_id;
+        $direccion->save();
+
+        return redirect()->action([DireccionController::class,'index'])->with('status_success','DireccionAgregada');
     }
 
     /**
@@ -56,7 +68,10 @@ class DireccionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $direccion=Direccion::find($id);
+        $localidad=Localidad::all();
+
+        return view('Formularios.Direccion.update',compact('direccion','localidad'));
     }
 
     /**
@@ -68,7 +83,16 @@ class DireccionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $direccion=Direccion::find($id);
+        $direccion->calle=$request->calle;
+        $direccion->codigoPostal=$request->codigoPostal;
+        $direccion->colonia=$request->colonia;
+        $direccion->referencia=$request->referencia;
+        $direccion->localidad_id=$request->localidad_id;
+        $direccion->save();
+
+        return redirect()->action([DireccionController::class,'index'])->with('status_success','DireccionAgregada');
+    
     }
 
     /**
@@ -79,6 +103,9 @@ class DireccionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $direccion=Direccion::find($id);
+        $direccion->delete();
+
+        return redirect()->action([DireccionController::class,'index'])->with('status_success','direccion Eliminada');
     }
 }
